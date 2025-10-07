@@ -29,11 +29,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-yrjem2-dxj5^a%-a(7wm9tyeprrl@%_uxluunztp)byx4xqa(e'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # Asterisk is used to allow any host. 
 # We need these when working with our jwt tokens.
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["*", '.herokuapp.com', '127.0.0.1']
 
 
 REST_FRAMEWORK = {
