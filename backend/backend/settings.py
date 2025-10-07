@@ -32,6 +32,7 @@ SECRET_KEY = 'django-insecure-yrjem2-dxj5^a%-a(7wm9tyeprrl@%_uxluunztp)byx4xqa(e
 DEBUG = True
 
 # Asterisk is used to allow any host. 
+# We need these when working with our jwt tokens.
 ALLOWED_HOSTS = ["*"]
 
 
@@ -44,6 +45,7 @@ REST_FRAMEWORK = {
     ],
 }
 
+# The access token will expire after 30 minutes. 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
@@ -59,6 +61,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'api',
+    'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -69,6 +74,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = 'backend.urls'
