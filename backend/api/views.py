@@ -22,6 +22,15 @@ class NoteListCreate(generics.ListCreateAPIView):
             print(serializer.errors)
 
 
+class NoteDelete(generics.DestroyAPIView):
+    serializer_class = NoteSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        return Note.objects.filter(author=user) # Notes we want to delete are only by a specific user. 
+
+
 
 # Chosen the generic view built into django that will handle creating a new user object. 
 # The below will look at all the users to as to not duplicate,
