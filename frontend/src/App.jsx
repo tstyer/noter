@@ -1,6 +1,6 @@
 // This will be the route of the app, allowing me to navigate using react router dom. 
 
-import react from react
+import react from "react"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import Login from "./pages/Login"
 import Register from "./pages/Register"
