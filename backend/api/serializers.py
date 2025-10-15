@@ -11,6 +11,15 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ["id", "username", "password"]
         extra_kwargs = {"password": {"write_only": True}}
 
+        def create(self, validated_data):
+        # ensures the password is hashed
+         user = User.objects.create_user(
+            username=validated_data["username"],
+            password=validated_data["password"]  
+        ) 
+         return user  
+        
+
 
 class NoteSerializer(serializers.ModelSerializer):
     class Meta:
