@@ -46,11 +46,12 @@ function Home() {
             .then((res) => {
                 if (res.status === 201) alert("Note created!");
                 else alert("Failed to make note.");
-                getNotes();
             })
             .catch((err) => alert(err));
+        getNotes();
     };
 
+    // HTML for the notes page/Home. 
     return (
         <div>
             <div>
@@ -60,7 +61,7 @@ function Home() {
                 ))}
             </div>
             <h2>Create a Note</h2>
-            <form onSubmit={createNote}>
+            <form onSubmit={createNote}> 
                 <label htmlFor="title">Title:</label>
                 <br />
                 <input
