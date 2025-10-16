@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import api from "../api";
-import Note from "../components"
+import Note from "../components/Note"
 
 
 function Home() {
