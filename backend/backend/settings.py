@@ -3,7 +3,8 @@ from pathlib import Path
 from datetime import timedelta
 import os
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent       
+FRONTEND_DIST = BASE_DIR.parent / "frontend" / "dist"    
 
 # --- Core ---
 SECRET_KEY = os.getenv("SECRET_KEY", "change-me-in-prod")
@@ -17,7 +18,7 @@ ALLOWED_HOSTS = [
 
 # --- Apps ---
 INSTALLED_APPS = [
-    "whitenoise.runserver_nostatic",     # before staticfiles (dev helper)
+    "whitenoise.runserver_nostatic",     
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -32,9 +33,9 @@ INSTALLED_APPS = [
 # --- Middleware (note WhiteNoise and CORS order) ---
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",  
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "corsheaders.middleware.CorsMiddleware",       
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -44,11 +45,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "backend.urls"
 
-# --- These templates point to Vite build ---
+# --- Templates -> point at Vite build output ---
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "frontend" / "dist"],  # <-- SPA index.html
+        "DIRS": [FRONTEND_DIST],  # SPA index.html
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -63,7 +64,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "backend.wsgi.application"
 
-# --- Here is the database (sqlite local; use DATABASE_URL on Heroku if set) ---
+# --- Database ---
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -75,7 +76,7 @@ if os.getenv("DATABASE_URL"):
     import dj_database_url
     DATABASES["default"] = dj_database_url.config(conn_max_age=600, ssl_require=True)
 
-# --- This is the Auth / DRF / JWT ---
+# --- DRF / JWT ---
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
@@ -90,20 +91,20 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
 }
 
-# --- i18n ---
+
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
-# --- Static files / WhiteNoise ---
-STATIC_URL = "/static/"                                  
+
+STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_DIRS = [BASE_DIR / "frontend" / "dist" / "assets"]
+STATICFILES_DIRS = [FRONTEND_DIST / "assets"]  # Vite puts assets here
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# --- CORS ---
+
 CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOW_CREDENTIALS = True   
+CORS_ALLOW_CREDENTIALS = True
