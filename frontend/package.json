@@ -30,4 +30,8 @@
   "overrides": {
     "vite": "npm:rolldown-vite@7.1.14"
   }
+  "scripts": { 
+    "build": "vite build" },
+  "devDependencies": { 
+    "vite": "...", "@vitejs/plugin-react": "..." }
 }
