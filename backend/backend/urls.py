@@ -19,6 +19,8 @@ from django.urls import path, include
 from api.views import CreateUserView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from django.http import HttpResponse
+from django.views.generic import TemplateView
+from django.urls import re_path
 
 def health(request):
     return HttpResponse("Backend is working")
@@ -31,4 +33,5 @@ urlpatterns = [
     path("api/token/refresh/", TokenRefreshView.as_view(), name="refresh"),
     path("api-auth/", include("rest_framework.urls")),
     path("api/", include("api.urls")),
+    re_path(r"^(?!api/).*", TemplateView.as_view(template_name="index.html")),
 ]

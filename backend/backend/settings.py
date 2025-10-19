@@ -21,19 +21,20 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+TEMPLATES[0]["DIRS"] = [BASE_DIR / "frontend" / "dist"]
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-yrjem2-dxj5^a%-a(7wm9tyeprrl@%_uxluunztp)byx4xqa(e'
+SECRET_KEY = os.getenv("SECRET_KEY", "change-me-in-prod")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
 # Asterisk is used to allow any host. 
 # We need these when working with our jwt tokens.
-ALLOWED_HOSTS = ["*", '.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ["*", '.herokuapp.com', 'noter-project-f92a389bfd7c.herokuapp.com', '127.0.0.1']
 
 
 REST_FRAMEWORK = {
@@ -55,6 +56,7 @@ SIMPLE_JWT = {
 # Application definition
 
 INSTALLED_APPS = [
+    'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -64,6 +66,7 @@ INSTALLED_APPS = [
     'api',
     'rest_framework',
     'corsheaders',
+    'django.contrib.staticfiles',
 ]
 
 MIDDLEWARE = [
@@ -81,6 +84,7 @@ ROOT_URLCONF = 'backend.urls'
 
 TEMPLATES = [
     {
+        "DIRS": [BASE_DIR / "frontend" / "dist"],
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
         'APP_DIRS': True,
@@ -144,6 +148,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+STATICFILES_DIRS = [BASE_DIR / "frontend" / "dist" / "assets"]
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
