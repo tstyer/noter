@@ -100,7 +100,7 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_DIRS = [FRONTEND_DIST / "assets"]  # Vite puts assets here
+STATICFILES_DIRS = [FRONTEND_DIST, FRONTEND_DIST / "assets"]  # Vite puts assets here
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
